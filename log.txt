@@ -1,0 +1,5 @@
+2022-11-03 14:47:04 - APIproject.main - INFO - gone to root
+2022-11-03 14:47:17 - APIproject.main - WARNING - loaded item testing
+2022-11-03 14:48:04 - APIproject.main - INFO - gone to root
+2022-11-03 14:50:32 - APIproject.main - INFO - gone to root
+2022-11-03 14:50:39 - APIproject.main - WARNING - loaded item testing
