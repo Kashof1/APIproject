@@ -3,3 +3,5 @@
 2022-11-03 14:48:04 - APIproject.main - INFO - gone to root
 2022-11-03 14:50:32 - APIproject.main - INFO - gone to root
 2022-11-03 14:50:39 - APIproject.main - WARNING - loaded item testing
+2022-11-10 14:00:49 - APIproject.main - INFO - gone to root
+2022-11-10 14:01:45 - APIproject.main - INFO - Requested latitude: 51.5002 and longitude: -0.120000124
