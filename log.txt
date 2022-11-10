@@ -5,3 +5,13 @@
 2022-11-03 14:50:39 - APIproject.main - WARNING - loaded item testing
 2022-11-10 14:00:49 - APIproject.main - INFO - gone to root
 2022-11-10 14:01:45 - APIproject.main - INFO - Requested latitude: 51.5002 and longitude: -0.120000124
+2022-11-10 14:15:21 - APIproject.main - INFO - gone to root
+2022-11-10 14:15:49 - APIproject.main - INFO - gone to root
+2022-11-10 14:38:14 - APIproject.core.weather - INFO - LOADED WEATHER
+2022-11-10 14:50:26 - APIproject.core.weather - INFO - LOADED WEATHER
+2022-11-10 14:50:40 - APIproject.main - INFO - gone to root
+2022-11-10 14:50:44 - APIproject.main - INFO - Requested latitude: 51.5002 and longitude: -0.120000124
+2022-11-10 14:51:17 - APIproject.core.weather - INFO - LOADED WEATHER
+2022-11-10 14:51:18 - APIproject.main - INFO - gone to root
+2022-11-10 14:51:23 - APIproject.main - INFO - Requested latitude: 51.5002 and longitude: -0.120000124
+2022-11-10 14:51:23 - APIproject.core.weather - INFO - https://api.open-meteo.com/v1/forecast?latitude=51.5002&longitude=-0.120000124&hourly=temperature_2m

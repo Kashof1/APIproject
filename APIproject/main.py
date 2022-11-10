@@ -6,6 +6,7 @@ from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from APIproject.core.weather import weather
 
 logs_file = Path(Path().resolve(), "log.txt")
 logs_file.touch(exist_ok=True)
@@ -23,6 +24,7 @@ app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
 
+weather_api = weather()
 
 @app.get("/")
 async def root():
@@ -40,6 +42,7 @@ async def read_item(item_id):
 async def get_weather(latitude: float = 51.5002, longitude: float = -0.120000124):
     log.info(f"Requested latitude: {latitude} and longitude: {longitude}")
     output = {}
+    weather_api.get_weather(longitude=longitude, latitude=latitude)
     return {"weather": output}
 
 
