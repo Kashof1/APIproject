@@ -2,7 +2,7 @@ import logging
 import os
 from pathlib import Path
 from typing import Union
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Form
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -39,7 +39,7 @@ async def read_item(item_id):
 
 
 @app.get("/weather")
-async def get_weather(latitude: float = 51.5002, longitude: float = -0.120000124, options:str=""):
+def get_weather(latitude: float = 51.5002, longitude: float = -0.120000124, options:str=""):
     log.info(options)
     log.info(f"Requested latitude: {latitude} and longitude: {longitude}")
     output = weather_api.get_weather(longitude=longitude, latitude=latitude,options=options)
@@ -52,3 +52,16 @@ def html_output(request: Request):
         "index.html",
         {"request": request, "data": ["hello", 1, False]},
     )
+
+@app.get("/chart", response_class=HTMLResponse)
+def html_output(request: Request):
+    data = get_weather(options="temperature_2m")
+    data = data["weather"]["hourly"]["time"]
+    return templates.TemplateResponse(
+        "weather.html",
+        {"request": request, "data": data},
+    )
+
+@app.post("/weather_send")
+def weather_send(country:str = "london", temperature:str | None = None):
+    return {"country":country, "temp": temperature}

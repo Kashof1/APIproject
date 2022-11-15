@@ -1,4 +1,5 @@
 import logging
+import json
 import urllib.request
 
 log = logging.getLogger(__name__)
@@ -9,4 +10,4 @@ def get_url(url:str):
     data = req_info.read()
     datastr = data.decode("utf8")
     req_info.close
-    return datastr
+    return json.loads(datastr)
