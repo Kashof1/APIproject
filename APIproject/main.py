@@ -2,6 +2,7 @@ import logging
 import os
 from pathlib import Path
 from typing import Union
+from typing import Optional
 from fastapi import FastAPI, Request, Form
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
@@ -26,11 +27,6 @@ templates = Jinja2Templates(directory="templates")
 
 weather_api = weather()
 
-@app.get("/")
-async def root():
-    log.info("gone to root")
-    return {"message": "Hello World"}
-
 
 @app.get("/items/{item_id}")
 async def read_item(item_id):
@@ -46,7 +42,7 @@ def get_weather(latitude: float = 51.5002, longitude: float = -0.120000124, opti
     return {"weather": output}
 
 
-@app.get("/html", response_class=HTMLResponse)
+@app.get("/", response_class=HTMLResponse)
 def html_output(request: Request):
     return templates.TemplateResponse(
         "index.html",
@@ -54,14 +50,26 @@ def html_output(request: Request):
     )
 
 @app.get("/chart", response_class=HTMLResponse)
-def html_output(request: Request):
-    data = get_weather(options="temperature_2m")
-    data = data["weather"]["hourly"]["time"]
+def chart_output(request: Request, latitude: float = 51.5002, longitude: float = -0.120000124, city="London", options:str = "temperature_2m", limit:int=50):
+    data = weather_api.get_weather(latitude=latitude, longitude=longitude, options=options)
+    labels_list = data['hourly']['time'][:limit]
+    values_list = data['hourly']['temperature_2m'][:limit]
+    labels = ",".join(labels_list)
+    values = str(values_list)[1:-1]
+    labelsvaluespair = []
+    for x in range (len(labels_list)):
+        labelsvaluespair.append([labels_list[x], values_list[x]])
     return templates.TemplateResponse(
         "weather.html",
-        {"request": request, "data": data},
+        {"request": request, "data": [data, labels, values, labelsvaluespair], "city": [city.title(), latitude, longitude]},
     )
 
 @app.post("/weather_send")
-def weather_send(country:str = "london", temperature:str | None = None):
-    return {"country":country, "temp": temperature}
+async def weather_send(request: Request, city:str=Form(), rain: Optional[str] = Form(None)):
+    cities = {"berlin": [52.52, 13.41], "london": [51.51, -0.13], "paris": [48.8566, 2.3522]}
+    options = "temperature_2m"
+    if rain:
+        options +=",rain"
+    if city in cities:
+        return chart_output(request=request, latitude=cities[city][0], longitude=cities[city][1], options=options, city=city.title())
+    return chart_output(request=request,options=options, city=city.title())
