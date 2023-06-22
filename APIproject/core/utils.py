@@ -1,5 +1,5 @@
-import logging
 import json
+import logging
 import urllib.request
 
 log = logging.getLogger(__name__)

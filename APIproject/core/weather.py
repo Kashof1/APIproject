@@ -1,6 +1,6 @@
 import logging
 from urllib.parse import quote, urlencode
-from APIproject.core.utils import get_url
+
 from APIproject.core.utils import get_url
 
 log = logging.getLogger(__name__)
